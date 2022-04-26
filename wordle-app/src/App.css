@@ -33,3 +33,15 @@
   font-size: 100px;
   text-align: center;
 }
+
+.Y {
+  background-color: rgb(249, 240, 61);
+}
+
+.G {
+  background-color: rgb(111, 190, 111);
+}
+
+.B {
+  background-color: grey;
+}

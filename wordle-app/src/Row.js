@@ -1,19 +1,28 @@
+import { useState } from 'react';
 import './App.css';
 import Tile from './Tile';
 
-function Row({row, turn, word, setTurn}) {
+function Row({row, turn, word, playTurn}) {
 
-    const playTurn = () => {
-        setTurn(turn+1);
+    // keep track of colour of letters in the row
+    const [letters, updateColours] = useState(Array(5).fill("")); // let B represent Black (Gray), Y rep yellow, G rep green, "" rep blank
+
+    const checkRow = (e) => {
+        e.preventDefault();
+        //console.log(letters);
+        if (turn === row) {
+            playTurn(!letters.includes("Y") && !letters.includes("B"));
+        }
     }
-    
+
     return (
-        <form onSubmit={() => playTurn()} className="Row">
-        <Tile tile={0} turn={turn} word={word} />
-        <Tile tile={1} turn={turn} word={word} />
-        <Tile tile={2} turn={turn} word={word} />
-        <Tile tile={3} turn={turn} word={word} />
-        <Tile tile={4} turn={turn} word={word} />
+        <form onSubmit={checkRow} className="Row">
+        <Tile row={row} tile={0} turn={turn} word={word} letters={letters} updateColours={updateColours} />
+        <Tile row={row} tile={1} turn={turn} word={word} letters={letters} updateColours={updateColours} />
+        <Tile row={row} tile={2} turn={turn} word={word} letters={letters} updateColours={updateColours} />
+        <Tile row={row} tile={3} turn={turn} word={word} letters={letters} updateColours={updateColours} />
+        <Tile row={row} tile={4} turn={turn} word={word} letters={letters} updateColours={updateColours} />
+        <button type="submit" style={{opacity:0}}></button>
         </form>
     );
 }
