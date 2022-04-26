@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import './App.css';
 
-function Tile({row, tile, turn, word, letters, updateColours, focus, setFocus}) {
+function Tile({row, tile, turn, word, letters, updateColours, focus, setFocus, thisWord, setWord}) {
 
     const [colour, setColour] = useState(""); //keep states for when turn has passed to know what to set the prev tiles' values and colours to
     const [value, setValue] = useState("");
@@ -18,6 +18,9 @@ function Tile({row, tile, turn, word, letters, updateColours, focus, setFocus}) 
         newLetters[tile] = col;
 
         setValue(letter);
+        var updatedWord = thisWord.splice();
+        updatedWord[tile] = letter;
+        setWord(updatedWord);
         setColour(col);
         updateColours(newLetters);
         setFocus(focus+1);
@@ -40,10 +43,9 @@ function Tile({row, tile, turn, word, letters, updateColours, focus, setFocus}) 
 
     return (
         <div className="Tile">
-            {/* TODO: make inputs automatically move to next tile after one letter , autofocus on first tile of active row */}
             {turn === row ? 
-                <input type="text" onChange={handleChange} id={`tile-${row}-${tile}`} /> :
-                <input type="text" disabled value={value} id={`tile-${row}-${tile}`} className={getColour()}/>
+                <input type="text" onChange={handleChange} id={`tile-${row}-${tile}`} maxLength="1" /> :
+                <input type="text" disabled value={value} className={getColour()} />
             }
         </div>
     );
