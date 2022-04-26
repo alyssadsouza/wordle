@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './App.css';
 
-function Tile({row, tile, turn, word, letters, updateColours}) {
+function Tile({row, tile, turn, word, letters, updateColours, focus, setFocus}) {
 
     const [colour, setColour] = useState(""); //keep states for when turn has passed to know what to set the prev tiles' values and colours to
     const [value, setValue] = useState("");
@@ -20,6 +20,7 @@ function Tile({row, tile, turn, word, letters, updateColours}) {
         setValue(letter);
         setColour(col);
         updateColours(newLetters);
+        setFocus(focus+1);
     }
 
     const getColour = () => {
@@ -27,12 +28,22 @@ function Tile({row, tile, turn, word, letters, updateColours}) {
         //console.log(colour);
         return colour;
     }
+    
+    const tileFocus = () => {
+        let currentTile = document.getElementById(`tile-${row}-${focus}`);
+        if (currentTile) {
+            currentTile.focus();
+        }
+    }
+
+    useEffect(tileFocus, [focus]);
 
     return (
         <div className="Tile">
+            {/* TODO: make inputs automatically move to next tile after one letter , autofocus on first tile of active row */}
             {turn === row ? 
-                <input type="text" onChange={handleChange}/> :
-                <input type="text" disabled value={value} className={getColour()}/>
+                <input type="text" onChange={handleChange} id={`tile-${row}-${tile}`} /> :
+                <input type="text" disabled value={value} id={`tile-${row}-${tile}`} className={getColour()}/>
             }
         </div>
     );
