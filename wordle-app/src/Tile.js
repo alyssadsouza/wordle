@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import './App.css';
 
-function Tile({row, tile, turn, word, letters, updateColours, focus, setFocus, thisWord, setWord}) {
+function Tile({row, tile, turn, word, letters, updateColours, focus, setFocus}) {
 
     const [colour, setColour] = useState(""); //keep states for when turn has passed to know what to set the prev tiles' values and colours to
     const [value, setValue] = useState("");
@@ -18,9 +18,6 @@ function Tile({row, tile, turn, word, letters, updateColours, focus, setFocus, t
         newLetters[tile] = col;
 
         setValue(letter);
-        var updatedWord = thisWord.splice();
-        updatedWord[tile] = letter;
-        setWord(updatedWord);
         setColour(col);
         updateColours(newLetters);
         setFocus(focus+1);
